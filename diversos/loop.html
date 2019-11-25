@@ -1,0 +1,22 @@
+<html ng-app="indexApp">
+
+<head>
+    <title>DataBind - Controller - Loop</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
+    <script src="index-controller.js"></script>
+</head>
+
+<body ng-controller="IndexController">
+    Nome: <input type="text" ng-model="nome" />
+    <h1>Olá {{nome}}!</h1>
+
+    <button ng-click="contarCliques()">
+        Clique aqui
+    </button> Você clicou no botão "Clique aqui" {{quantideCliques}} vezes
+
+    <ul>
+        <li ng-repeat="fruta in frutas">{{fruta}}</li>
+    </ul>
+</body>
+
+</html>

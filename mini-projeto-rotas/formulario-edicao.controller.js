@@ -19,8 +19,6 @@ function edicaoController($scope, $location, $routeParams) {
         // Atualiza os dados da fruta editada
         $scope.frutas[_indiceFruta] = $scope.fruta;
 
-        console.log
-
         // Redireciona para a página principal
         $location.path('/');
     };

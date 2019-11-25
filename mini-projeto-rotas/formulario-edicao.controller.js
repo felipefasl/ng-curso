@@ -1,5 +1,5 @@
 angular
-    .module('rotasApp')
+    .module('app')
     .controller('EdicaoController', edicaoController);
 
 function edicaoController($scope, $location, $routeParams) {

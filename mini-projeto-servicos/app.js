@@ -1,5 +1,5 @@
 angular
-    .module('rotasApp', [
+    .module('app', [
         'ngRoute',
         'frutaServiceApp'
     ])

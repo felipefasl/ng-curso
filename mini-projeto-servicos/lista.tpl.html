@@ -1,9 +1,10 @@
 <span ng-controller="ListaController" ng-init="inicializar()">
-    <h2>Frutas ({{frutas.length}})</h2>
-    <ul>
-        <li ng-repeat="fruta in frutas">
-            <a href="#/edicao/{{fruta.id}}">{{fruta.nome}}</a>
-        </li>
-    </ul>
-    <a href="#/novo">Novo</a>
+<h2>Frutas ({{frutas.length}})</h2>
+{{mensagem}}
+<ul>
+    <li ng-repeat="fruta in frutas">
+        <a href="#/edicao/{{fruta.id}}">{{fruta.nome}}</a> &nbsp; <button ng-click="excluir(fruta.id)">excluir</button>
+    </li>
+</ul>
+<a href="#/novo">Novo</a>
 </span>

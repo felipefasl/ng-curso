@@ -1,6 +1,8 @@
 angular
-    .module('rotasApp')
-    .controller('NovoController', ['$scope', '$location', 'FrutaService', novoController]);
+    .module('app')
+    .controller('NovoController', novoController);
+
+novoController.$inject = ['$scope', '$location', 'FrutaService'];
 
 function novoController($scope, $location, frutaService) {
 
@@ -11,14 +13,11 @@ function novoController($scope, $location, frutaService) {
     };
 
     /**
-     * @description Inclui uma nova fruta no array de frutas
+     * @description Inclui uma nova fruta na base de dados
      */
     $scope.salvar = function() {
 
-        // Adiciona um novo item(fruta) no array(frutas)
-        var nomeFruta = $scope.fruta.nome;
-        console.log(`nome`, nomeFruta);
-        frutaService.incluir(nomeFruta)
+        frutaService.incluir($scope.fruta.nome)
             .then(function() {
 
                 // Redireciona para a página principal

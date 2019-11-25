@@ -7,17 +7,29 @@ function frutaService($http) {
 
     return {
         listar: function() {
-            return $http.get(ENDERECO_BACKEND);
+
+            return $http.get(ENDERECO_BACKEND)
         },
         incluir: function(nome) {
-            console.log(`nome`, nome);
+
             return $http.post(ENDERECO_BACKEND, nome);
         },
         atualizar: function(fruta) {
+
             return $http.put(ENDERECO_BACKEND, fruta);
         },
         deletar: function(id) {
-            return $http.delete(ENDERECO_BACKEND, id);
+
+            var parametros = {
+                data: id,
+                headers: {
+                    'Content-type': 'application/json;charset=utf-8'
+                }
+            }
+
+            return $http.delete(ENDERECO_BACKEND, parametros);
         }
     }
+
+
 }

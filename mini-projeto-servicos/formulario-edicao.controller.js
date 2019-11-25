@@ -1,6 +1,8 @@
 angular
-    .module('rotasApp')
-    .controller('EdicaoController', ['$scope', '$rootScope', '$location', '$routeParams', 'FrutaService', edicaoController]);
+    .module('app')
+    .controller('EdicaoController', edicaoController);
+
+edicaoController.$inject = ['$scope', '$rootScope', '$location', '$routeParams', 'FrutaService'];
 
 function edicaoController($scope, $rootScope, $location, $routeParams, frutaService) {
 

@@ -1,5 +1,5 @@
 angular
-    .module('rotasApp')
+    .module('app')
     .controller('NovoController', novoController);
 
 function novoController($scope, $location, $routeParams) {

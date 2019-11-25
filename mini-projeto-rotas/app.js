@@ -1,5 +1,5 @@
 angular
-    .module('rotasApp', ['ngRoute'])
+    .module('app', ['ngRoute'])
     .config(['$routeProvider', '$locationProvider', definirRotas])
     .run(['$rootScope', inicializarVariaveisGlobais]);
 

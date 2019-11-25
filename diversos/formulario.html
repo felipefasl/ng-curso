@@ -1,27 +1,17 @@
-<html ng-app="indexApp">
+<html ng-app="app">
 <meta charset="utf-8" />
 
 <head>
-    <title>DataBind - Controller - Loop - Fomulário</title>
+    <title>Fomulário</title>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
-    <script src="index-controller.js"></script>
+    <script src="exemplo.controller.js"></script>
 </head>
 
-<body ng-controller="IndexController">
-    Nome: <input type="text" ng-model="nome" />
-    <hr/>
-    <h1>Olá {{nome}}!</h1>
-    <button ng-click="contarCliques()">
-        Clique aqui
-    </button> Você clicou no botão "Clique aqui" {{quantideCliques}} vezes
-
-    <ul>
-        <li ng-repeat="fruta in frutas">{{fruta}}</li>
-    </ul>
-
+<body ng-controller="ExemploController">
     <form name="meuFormulario">
+
         <input type="text" ng-model="nomeFormulario" name="nomeFormulario" value="Seu nome é..." required/>
-        <button ng-disabled="meuFormulario.$invalid" />Salvar</button>
+        <button ng-disabled="meuFormulario.$invalid" ng-click="salvar()" />Salvar</button>
         <br/>
         <span ng-show="meuFormulario.$invalid">
             Formulário com erros!

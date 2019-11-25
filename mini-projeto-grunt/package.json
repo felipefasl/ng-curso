@@ -1,7 +1,7 @@
 {
     "name": "mini-projeto-grunt",
     "version": "1.0.0",
-    "description": "",
+    "description": "Projeto desenvolvido no curso de AngularJS",
     "main": "index.js",
     "scripts": {
         "test": "karma start karma.conf.js"
@@ -26,8 +26,10 @@
         "jasmine-core": "^2.5.2",
         "jit-grunt": "^0.10.0",
         "karma": "^1.7.1",
+        "karma-chrome-launcher": "^3.1.0",
         "karma-coverage": "^1.1.1",
         "karma-jasmine": "^1.0.2",
-        "karma-phantomjs-launcher": "^1.0.2"
+        "karma-phantomjs-launcher": "^1.0.2",
+        "phantomjs-prebuilt": "^2.1.16"
     }
 }

@@ -1,4 +1,4 @@
-module.exports = (grunt) => {
+module.exports = function(grunt) {
 
     var srcDir = 'src';
     var buildDir = 'www';
@@ -92,23 +92,6 @@ module.exports = (grunt) => {
                 src: []
             }
         },
-        ts: {
-            default: {
-                tsconfig: true
-            }
-        },
-        tslint: {
-            options: {
-                configuration: 'tslint.json',
-                force: false,
-                fix: false
-            },
-            files: {
-                src: [
-                    srcDir + '/**/*.ts'
-                ]
-            }
-        },
         uglify: {
             all: {
                 files: [{
@@ -149,28 +132,18 @@ module.exports = (grunt) => {
     grunt.registerTask(
         'build',
         'Compila todos os assets e copia os arquivos para o diretório de build.', ['clean', 'jshint', 'htmllint',
-            'karma',
+            // 'karma',
             'copy', 'cssmin', 'uglify'
         ]
-
     );
 
     grunt.registerTask(
         'fastbuild',
-        'Compila todos os assets e copia os arquivos para o diretório de build.', ['clean', 'htmllint',
-            // 'karma',
-            'copy'
-        ]
+        'Compila todos os assets e copia os arquivos para o diretório de build.', ['clean', 'htmllint', 'karma', 'copy']
     );
 
     grunt.registerTask(
         'default',
         'Observa o projeto por mudanças, automaticamente contrói e executa o servidor.', ['fastbuild', 'connect', 'watch']
     );
-
-    grunt.registerTask(
-        'dist',
-        'Gera o projeto em sua versão final removendo eventuais códigos de desenvolvimento.', ['build', 'strip_code']
-    );
-
 };

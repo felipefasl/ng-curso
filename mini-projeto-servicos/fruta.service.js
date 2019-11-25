@@ -30,6 +30,4 @@ function frutaService($http) {
             return $http.delete(ENDERECO_BACKEND, parametros);
         }
     }
-
-
 }

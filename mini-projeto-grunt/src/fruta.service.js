@@ -7,7 +7,6 @@ function frutaService($http) {
 
     return {
         listar: function() {
-
             return $http.get(ENDERECO_BACKEND);
         },
         incluir: function(nome) {

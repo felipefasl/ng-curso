@@ -1,5 +1,5 @@
 angular
-    .module('rotasApp')
+    .module('app')
     .controller('ListaController', listaController);
 
 function listaController($scope) {

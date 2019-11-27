@@ -30,13 +30,11 @@ function edicaoController($q, $scope, $location, $routeParams) {
 
         return $q(function(resolve) {
 
-            setTimeout(() => {
+            setTimeout(function() {
 
                 $scope.frutas[_indiceFruta] = $scope.fruta;
                 resolve();
             }, 1000);
         });
     }
-
-
 }

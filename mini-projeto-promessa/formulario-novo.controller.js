@@ -25,7 +25,7 @@ function novoController($scope, $location, $routeParams, $q) {
     function adicionarFrutaNaLista() {
         var deferred = $q.defer();
 
-        setTimeout(() => {
+        setTimeout(function() {
 
             $scope.frutas.push($scope.fruta);
             deferred.resolve();

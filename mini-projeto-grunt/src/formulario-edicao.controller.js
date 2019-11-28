@@ -38,6 +38,8 @@ function edicaoController($scope, $rootScope, $location, $routeParams, frutaServ
             }
         }
 
+        // var frutaSelecionada = $rootScope.frutas.find(function(fruta){ return fruta.id === idFrutaSelecionada});
+
         return frutaSelecionada;
     }
 }

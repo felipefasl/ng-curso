@@ -1,0 +1,17 @@
+<html ng-app="app">
+<meta charset="utf-8" />
+
+<head>
+    <title>Filtros</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
+    <script src="filtros.js"></script>
+    <script src="filtro.controller.js"></script>
+</head>
+
+<body ng-controller="FiltroController">
+    <hr/> CPF: <input type="text" ng-model="cpfDigitado" />
+    <h1>CPF digitado: {{cpfDigitado | cpf}}</h1>
+    <hr/>
+</body>
+
+</html>

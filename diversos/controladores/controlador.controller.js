@@ -1,6 +1,6 @@
 angular
     .module('app', [])
-    .controller('ExemploController', exemploController);
+    .controller('ControladorController', exemploController);
 
 function exemploController($scope, $window) {
 

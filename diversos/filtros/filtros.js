@@ -1,5 +1,6 @@
 angular.module('filtrosApp', [])
-    .filter('cpf', formatarCPF);
+    .filter('cpf', formatarCPF)
+    .filter('adicionaMeuNome', adicionarMeuNome);
 
 function formatarCPF() {
 
@@ -13,4 +14,12 @@ function formatarCPF() {
         }
         return str;
     };
+}
+
+function adicionarMeuNome() {
+
+    return function(input) {
+
+        return input + ' Felipe Lima';
+    }
 }

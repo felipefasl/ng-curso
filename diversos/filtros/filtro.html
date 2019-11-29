@@ -8,10 +8,13 @@
     <script src="filtro.controller.js"></script>
 </head>
 
+
 <body ng-controller="FiltroController">
+
+    <h1>{{1800 | currency}}</h1>
     <hr/> CPF: <input type="text" ng-model="cpfDigitado" />
     <h1>CPF digitado: {{cpfDigitado | cpf}}</h1>
-    <hr/>
+    <hr/> {{'Adicionando meu nome: ' | adicionaMeuNome}}
 </body>
 
 </html>

@@ -1,17 +1,16 @@
 angular
     .module('app', [])
-    .controller('ControladorController', exemploController);
+    .controller('ControladorController', controladorController);
 
-function exemploController($scope, $window) {
+function controladorController($scope) {
 
-    $scope.nomeFormulario = '';
-
+    $scope.nome = 'Felipe Lima ';
+    $scope.quantidadeCliques = 0;
     /**
-     * @description Simula salvamento dos dados do formulário
+     * @description adiciona 1 à variável quantidadeCliques
      */
-    $scope.salvar = function() {
+    $scope.contarCliques = function() {
 
-        $scope.nomeFormulario = '';
-        $window.alert('Operação realizada com sucesso!')
+        $scope.quantidadeCliques++;
     };
 }

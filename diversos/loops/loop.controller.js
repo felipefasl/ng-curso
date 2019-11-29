@@ -2,9 +2,7 @@ angular
     .module('app', [])
     .controller('LoopController', loopController);
 
-function loopController($scope, $window) {
+function loopController($scope) {
 
     $scope.frutas = ['banana', 'abacaxi', 'maçã', 'cajá'];
-
-
 }

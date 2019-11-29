@@ -4,17 +4,17 @@
 <head>
     <title>Fomulário</title>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
-    <script src="exemplo.controller.js"></script>
+    <script src="formulario.controller.js"></script>
 </head>
 
 <body ng-controller="ExemploController">
     <form name="meuFormulario">
 
-        <input type="text" ng-model="nomeFormulario" name="nomeFormulario" value="Seu nome é..." required/>
+        <input type="text" ng-model="nomeFormulario" name="nomeFormulario" placeholder="Seu nome é..." required/>
         <button ng-disabled="meuFormulario.$invalid" ng-click="salvar()" />Salvar</button>
         <br/>
         <span ng-show="meuFormulario.$invalid">
-            Formulário com erros!
+            {{ 123456 | currency: 'R$'}}
         </span>
         <br/>
     </form>

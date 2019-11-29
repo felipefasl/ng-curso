@@ -1,19 +1,17 @@
 describe('NovoController', function() {
 
-    beforEach(function() {
-
-        module('app', 'frutaServiceApp');
-    });
-
     var controllerTest;
 
+    beforeEach(function() {
 
-    it('NovoController', function() {
+        angular.mock.module('app', 'frutaServiceApp');
+        angular.mock.inject(function(_$controller_, _$rootScope_, _$location_, _FrutaService_) {
 
-        inject(function(_$controller_, _FrutaService_) {
-            controllerTest = _$controller_('NovoCont')
+            controllerTest = _$controller_('NovoController', { $scope: _$rootScope_.$new(), $location: _$location_, });
+
         });
     });
-
-
+    it('NovoController', function() {
+        expect(controllerTest).toBeDefined();
+    });
 });

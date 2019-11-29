@@ -12,13 +12,17 @@
     <h1>Olá {{nome}}!</h1>
     <hr/>
     <div>
-        Olá <input ng-model='nome2'>
+        Olá <input ng-model='nome2'><br/>
         <span ng-bind="nome2"></span> <br/>
         <span ng:bind="nome2"></span> <br/>
         <span ng_bind="nome2"></span> <br/>
         <span data-ng-bind="nome2"></span> <br/>
         <span x-ng-bind="nome2"></span> <br/>
     </div>
+    <br/>
+    <input type="radio" value="1" ng-model="valor"> 1<br>
+    <input type="radio" value="2" ng-model="valor"> 2<br>
+    <input type="radio" value="3" ng-model="valor"> 3<br> O valor selecionado foi: {{valor}}
 </body>
 
 </html>

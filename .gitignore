@@ -1,4 +1,4 @@
 .tmp
-mini-projeto-grunt/node_modules/
-mini-projeto-grunt/www/
-mini-projeto-grunt/package-lock.json
+grunt/node_modules/
+grunt/www/
+grunt/package-lock.json

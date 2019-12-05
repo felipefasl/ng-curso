@@ -3,7 +3,7 @@ module.exports = function(grunt) {
     // Pasta onde se encontra os códigos do seu projeto
     var srcDir = 'src';
 
-    // Pasta para onde deseja cobiar os códigos do build para execução no browser
+    // Pasta para onde deseja copiar os códigos do build para execução no browser
     var buildDir = 'www';
 
     grunt.initConfig({
@@ -102,6 +102,10 @@ module.exports = function(grunt) {
             build: {
                 files: [srcDir + '/**'],
                 tasks: ['fastbuild']
+            },
+            karma: {
+                files: [srcDir + '/**'],
+                tasks: ['karma']
             }
         },
 
@@ -128,16 +132,21 @@ module.exports = function(grunt) {
     // definição de tarefas
     grunt.registerTask(
         'build',
-        'Compila todos os assets e copia os arquivos para o diretório de build.', ['clean', 'jshint', 'karma', 'copy', 'cssmin', 'uglify']
+        'Compila todos os assets e copia os arquivos para o diretório de build.', ['clean', 'jshint', 'copy', 'cssmin', 'uglify']
     );
 
     grunt.registerTask(
         'fastbuild',
-        'Compila todos os assets e copia os arquivos para o diretório de build.', ['clean', 'jshint', 'karma', 'copy']
+        'Compila todos os assets e copia os arquivos para o diretório de build.', ['clean', 'jshint', 'copy']
     );
 
     grunt.registerTask(
         'default',
         'Observa o projeto por mudanças, automaticamente contrói e executa o servidor.', ['fastbuild', 'connect', 'watch']
+    );
+
+    grunt.registerTask(
+        'teste',
+        'Observa o projeto por mudanças, automaticamente contrói e executa o servidor.', ['karma', 'watch:karma']
     );
 };

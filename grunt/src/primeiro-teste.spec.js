@@ -18,7 +18,7 @@ describe('Primeiros Testes', function() {
     });
 
 
-    xit('verificarTipoTriangulo', function() {
+    it('verificarTipoTriangulo', function() {
 
         expect(verificarTipoTriangulo(1, 1, 1)).toEqual('EQUILÁTERO');
         expect(verificarTipoTriangulo(2, 1, 1)).toEqual('ISÓSCELES');
@@ -46,12 +46,6 @@ function exibirAntecessor(valor) {
 
 }
 
-/**
- * Escreva uma função para receber um valor e retornar o seu antecessor. 
- */
-function exibirAntecessor(valor) {
-
-}
 
 /**
  * Ler 3 valores (considere que não serão informados valores iguais) e escrever a soma dos 2
@@ -67,7 +61,7 @@ Para estar em condições, um dos seguintes requisitos deve ser satisfeito:
 - Ter no mínimo 65 anos de idade.
 - Ter trabalhado no mínimo 30 anos.
 - Ter no mínimo 60 anos e ter trabalhado no mínimo 25 anos.
-A função deve retornar as string 'QUALIFICADO' caso o funcionário esteja qualificado para aposentadoria
+A função deve retornar as string`s 'QUALIFICADO' caso o funcionário esteja qualificado para aposentadoria
 ou 'NÃO QUALIFICADO' em caso contrário
  */
 function verificarAposentadoria(idade, tempoTrabalho) {
@@ -83,6 +77,5 @@ Crie uma função para verificar se um triangulo é Equilátero, Isósceles ou E
 A função deve retornar a string 'EQUILÁTERO' ou 'ISÓSCELES' ou 'ESCALENO'
  */
 function verificarTipoTriangulo(lado1, lado2, lado3) {
-
 
 }

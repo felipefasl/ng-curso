@@ -4,5 +4,9 @@ angular
 
 function listaController($scope) {
 
-    console.log('listaController');
+    $scope.excluir = function(p1) {
+        if (confirm('Confirma a deleção da fruta ' + $scope.frutas[p1])) {
+            $scope.frutas.splice(p1, 1);
+        }
+    }
 }

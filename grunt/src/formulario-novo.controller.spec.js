@@ -1,17 +1,32 @@
 describe('NovoController', function() {
 
     var controllerTest;
+    var $scope;
+    var $location;
+    var frutaService;
 
     beforeEach(function() {
 
-        angular.mock.module('app', 'frutaServiceApp');
-        angular.mock.inject(function(_$controller_, _$rootScope_, _$location_, _FrutaService_) {
+        module('app', 'frutaServiceApp', 'ngRoute');
+        inject(function(_$controller_, _$rootScope_, _$location_, _FrutaService_) {
 
-            controllerTest = _$controller_('NovoController', { $scope: _$rootScope_.$new(), $location: _$location_, });
+            $scope = _$rootScope_.$new();
+            $location = _$location_;
+            frutaService = _FrutaService_;
+            controllerTest = _$controller_('NovoController', { $scope: $scope, $location: $location, frutaService: frutaService });
 
         });
     });
+
     it('NovoController', function() {
-        expect(controllerTest).toBeDefined();
+
+        expect($scope.titulo).toBe('Nova Fruta');
+        expect($scope.fruta).toBeDefined();
+    });
+
+    it('salvar', function() {
+
+        $scope.fruta = { id: 1, descricao: 'teste' };
+        $scope.salvar();
     });
 });

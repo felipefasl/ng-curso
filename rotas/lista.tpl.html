@@ -1,7 +1,8 @@
 <h2>Frutas ({{frutas.length}})</h2>
 <ul>
-    <li ng-repeat="fruta in frutas">
+    <li ng-repeat="(index, fruta) in frutas">
         <a href="#/edicao/{{fruta}}">{{fruta}}</a>
+        <button ng-click="excluir(index)">Excluir</button>
     </li>
 </ul>
 <a href="#/novo">Novo</a>

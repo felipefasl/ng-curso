@@ -2,7 +2,7 @@ angular
     .module('app')
     .controller('NovoController', novoController);
 
-function novoController($scope, $location, $routeParams) {
+function novoController($scope, $location) {
 
     $scope.titulo = 'Nova Fruta';
     $scope.fruta = '';

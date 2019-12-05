@@ -2,13 +2,16 @@ angular
     .module('app')
     .controller('EdicaoController', edicaoController);
 
-edicaoController.$inject = ['$scope', '$rootScope', '$location', '$routeParams', 'FrutaService'];
+edicaoController.$inject = ['$scope', '$location', '$routeParams', 'FrutaService'];
 
-function edicaoController($scope, $rootScope, $location, $routeParams, frutaService) {
+function edicaoController($scope, $location, $routeParams, frutaService) {
 
     // Variáveis Públicas
     $scope.titulo = 'Editar Fruta';
-    $scope.fruta = pesquisarFruta();
+    $scope.fruta = {
+        id: $routeParams.id,
+        nome: $routeParams.nome
+    };
 
     /**
      * @description Salva os dados editados da fruta
@@ -21,23 +24,10 @@ function edicaoController($scope, $rootScope, $location, $routeParams, frutaServ
 
                 // Redireciona para a página principal
                 $location.path('/');
+            })
+            .catch(function(erro) {
+
+                console.log(erro.data.message);
             });
     };
-
-    function pesquisarFruta() {
-
-        var idFrutaSelecionada = Number($routeParams.id);
-
-        var frutaSelecionada;
-        for (var index = 0; index < $rootScope.frutas.length; index++) {
-
-            var fruta = $rootScope.frutas[index];
-            if (fruta.id === idFrutaSelecionada) {
-
-                frutaSelecionada = fruta;
-            }
-        }
-
-        return frutaSelecionada;
-    }
 }

@@ -15,6 +15,7 @@ module.exports = function(config) {
         // list of files / patterns to load in the browser
         files: [
             'https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js',
+            'https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular-route.min.js',
             'https://cdnjs.cloudflare.com/ajax/libs/angular-mocks/1.7.8/angular-mocks.min.js',
             'src/**/fruta.service.js',
             'src/**/index.js',

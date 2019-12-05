@@ -3,7 +3,10 @@
 {{mensagem}}
 <ul>
     <li ng-repeat="fruta in frutas">
-        <a href="#/edicao/{{fruta.id}}">{{fruta.nome}}</a> &nbsp; <button ng-click="excluir(fruta.id)">excluir</button>
+        <a href="#/edicao/{{fruta.id}}/{{fruta.nome}}">
+            {{fruta.nome}}
+        </a> &nbsp; 
+        <button ng-click="excluir(fruta.id)">excluir</button>
     </li>
 </ul>
 <a href="#/novo">Novo</a>

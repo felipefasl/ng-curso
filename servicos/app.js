@@ -16,7 +16,7 @@ function definirRotas($routeProvider, $locationProvider) {
         templateUrl: 'lista.tpl.html'
     }).
 
-    when('/edicao/:id', {
+    when('/edicao/:id/:nome', {
         controller: 'EdicaoController',
         templateUrl: 'formulario.tpl.html'
     }).

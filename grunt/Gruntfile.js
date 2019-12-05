@@ -1,15 +1,21 @@
 module.exports = function(grunt) {
 
+    // Pasta onde se encontra os códigos do seu projeto
     var srcDir = 'src';
+
+    // Pasta para onde deseja cobiar os códigos do build para execução no browser
     var buildDir = 'www';
 
-    // configure the tasks
     grunt.initConfig({
+
+        // https://github.com/gruntjs/grunt-contrib-clean
         clean: {
             all: {
-                src: [buildDir, 'coverage', '*.tmp.txt']
+                src: [buildDir]
             }
         },
+
+        // https://github.com/gruntjs/grunt-contrib-connect
         connect: {
             server: {
                 options: {
@@ -27,6 +33,8 @@ module.exports = function(grunt) {
                 }
             }
         },
+
+        // https://github.com/gruntjs/grunt-contrib-copy
         copy: {
             all: {
                 cwd: srcDir,
@@ -35,6 +43,8 @@ module.exports = function(grunt) {
                 expand: true
             }
         },
+
+        // https://github.com/gruntjs/grunt-contrib-cssmin
         cssmin: {
             all: {
                 files: [{
@@ -46,12 +56,8 @@ module.exports = function(grunt) {
                 }]
             }
         },
-        karma: {
-            unit: {
-                logLevel: 'ERROR',
-                configFile: 'karma.conf.js'
-            }
-        },
+
+        // https://github.com/htmllint/grunt-htmllint
         htmllint: {
             all: {
                 options: {
@@ -61,9 +67,12 @@ module.exports = function(grunt) {
                     'attr-req-value': false,
                     'tag-bans': []
                 },
-                src: [srcDir + '/**/*.xhtml']
+                src: [srcDir + '/**/*.html']
             }
         },
+
+        // https://github.com/gruntjs/grunt-contrib-jshint
+        // Mais detalhes sobre a configuração do arquivo .jshintrc em http://jshint.com/docs/
         jshint: {
             options: {
                 jshintrc: true
@@ -71,27 +80,11 @@ module.exports = function(grunt) {
             all: [srcDir + '/**/*.js',
                 '!' + srcDir + '/**/*.min.js',
                 '!' + srcDir + '/**/*-min.js',
-                '!' + srcDir + '/**/portal.js',
-                '!' + srcDir + '/**/scripts/livereload.js',
-                '!' + srcDir + '/**/*-spec.js',
-                '!' + srcDir + '/**/plt-config.*'
+                '!' + srcDir + '/**/*-spec.js'
             ]
         },
-        strip_code: {
-            options: {
-                blocks: [{
-                    start_block: '/* start-test-block */',
-                    end_block: '/* end-test-block */'
-                }, {
-                    start_block: '<!-- start-html-test-code -->',
-                    end_block: '<!-- end-html-test-code -->'
-                }]
-            },
-            dist: {
-                // se precisar do strip_code, inclua o arquivo no array abaixo
-                src: []
-            }
-        },
+
+        // https://github.com/gruntjs/grunt-contrib-uglify
         uglify: {
             all: {
                 files: [{
@@ -103,20 +96,25 @@ module.exports = function(grunt) {
                 }]
             }
         },
+
+        // https://github.com/gruntjs/grunt-contrib-watch
         watch: {
             build: {
                 files: [srcDir + '/**'],
                 tasks: ['fastbuild']
             }
         },
-        test: {
-            files: [srcDir + '/**'],
-            tasks: ['karma'],
-            options: {}
+
+        // https://github.com/karma-runner/grunt-karma
+        karma: {
+            unit: {
+                logLevel: 'ERROR',
+                configFile: 'karma.conf.js'
+            }
         }
     });
 
-    // load the tasks
+    // Carregamento das tarefas já definidas pelo grunt
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-contrib-copy');
@@ -126,20 +124,16 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-htmllint');
     grunt.loadNpmTasks('grunt-karma');
-    grunt.loadNpmTasks('grunt-strip-code');
 
-    // define the tasks
+    // definição de tarefas
     grunt.registerTask(
         'build',
-        'Compila todos os assets e copia os arquivos para o diretório de build.', ['clean', 'jshint', 'htmllint',
-            // 'karma',
-            'copy', 'cssmin', 'uglify'
-        ]
+        'Compila todos os assets e copia os arquivos para o diretório de build.', ['clean', 'jshint', 'karma', 'copy', 'cssmin', 'uglify']
     );
 
     grunt.registerTask(
         'fastbuild',
-        'Compila todos os assets e copia os arquivos para o diretório de build.', ['clean', 'htmllint', 'karma', 'copy']
+        'Compila todos os assets e copia os arquivos para o diretório de build.', ['clean', 'jshint', 'karma', 'copy']
     );
 
     grunt.registerTask(

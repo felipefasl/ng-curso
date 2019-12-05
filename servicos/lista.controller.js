@@ -5,7 +5,9 @@ angular
 listaController.$inject = ['$scope', '$rootScope', '$window', 'FrutaService'];
 
 function listaController($scope, $rootScope, $window, frutaService) {
+
     $scope.mensagem = 'carregando...';
+
     $scope.inicializar = function() {
 
         $rootScope.frutas = [];
@@ -13,6 +15,9 @@ function listaController($scope, $rootScope, $window, frutaService) {
             .then(function(response) {
                 $scope.mensagem = '';
                 $rootScope.frutas = response.data;
+            })
+            .catch(function(erro) {
+                console.log(erro);
             });
     };
 
@@ -22,13 +27,17 @@ function listaController($scope, $rootScope, $window, frutaService) {
         frutaService.deletar(id)
             .then(function() {
 
-                $scope.mensagem = '';
-                $rootScope.frutas = $rootScope.frutas.filter(function(fruta) { return fruta.id !== id });
-                $window.alert('Operação realizada com sucesso!');
-            }, function(erro) {
+                frutaService.listar()
+                    .then(function(response) {
+
+                        $scope.mensagem = '';
+                        $rootScope.frutas = response.data;
+                        $window.alert('Operação realizada com sucesso!');
+                    });
+            })
+            .catch(function(erro) {
 
                 console.log(erro.data.message);
             });
-
     };
 }

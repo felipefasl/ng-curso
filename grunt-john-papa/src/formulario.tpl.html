@@ -1,0 +1,7 @@
+<!-- Guia de estilo John papa https://github.com/johnpapa/angular-styleguide/blob/master/a1/i18n/pt-BR.md -->
+<h2> {{vm.titulo}} </h2>
+<form name="meuFormulario">
+    <input type="text" ng-model="vm.fruta.nome" required>
+    <button ng-click="vm.salvar()" ng-disabled="meuFormulario.$invalid">Salvar</button>
+</form>
+<a href="#/">Cancelar</a>

@@ -1,0 +1,11 @@
+<!-- Guia de estilo John papa https://github.com/johnpapa/angular-styleguide/blob/master/a1/i18n/pt-BR.md -->
+<span>
+    <h2>Frutas ({{vm.frutas.length}})</h2>
+    {{vm.mensagem}}
+    <ul>
+        <li ng-repeat="fruta in vm.frutas">
+            <a href="#/edicao/{{vm.fruta.id}}">{{vm.fruta.nome}}</a> &nbsp; <button ng-click="vm.excluir(fruta.id)">excluir</button>
+        </li>
+    </ul>
+    <a href="#/novo">Novo</a>
+</span>

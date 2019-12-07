@@ -1,4 +1,6 @@
-describe('FrutaService', function() {
+describe('FrutaService', testarFrutaService);
+
+function testarFrutaService() {
 
     var serviceTest;
     var $httpBackend;
@@ -18,6 +20,7 @@ describe('FrutaService', function() {
         $httpBackend.expectGET('https://ng-curso-api.herokuapp.com/frutas').respond(200, [{ id: 1, nome: 'banana' }]);
         serviceTest.listar()
             .then(function(response) {
+
                 var listaFrutas = response.data;
                 expect(listaFrutas.length).toEqual(1);
                 expect(listaFrutas[0].id).toEqual(1);
@@ -25,4 +28,4 @@ describe('FrutaService', function() {
             });
         $httpBackend.flush();
     });
-});
+}

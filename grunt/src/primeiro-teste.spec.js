@@ -18,7 +18,7 @@ describe('Primeiros Testes', function() {
     });
 
 
-    it('verificarTipoTriangulo', function() {
+    xit('verificarTipoTriangulo', function() {
 
         expect(verificarTipoTriangulo(1, 1, 1)).toEqual('EQUILÁTERO');
         expect(verificarTipoTriangulo(2, 1, 1)).toEqual('ISÓSCELES');

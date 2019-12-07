@@ -1,4 +1,4 @@
-# ng-curso="AngularJS"
+# ng-curso="AngularJS - O necessário"
 
 Material ministrado no curso AngularJs - O necessário em 40hrs Por [Felipe Lima](https://github.com/felipefasl) e [Guilherme Cruz](https://github.com/sambrmg)
 

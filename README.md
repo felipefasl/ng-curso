@@ -7,7 +7,7 @@ Material ministrado no curso AngularJs em 40hrs Por [Felipe Lima](https://github
 ##### [1.1 Introdução](#11-introdução-1)
 ##### [1.2 Preparando o ambiente](#12-preparando-o-ambiente-1)
 ###### [1.2.1. Editor de código](#121-editor-de-codigo-1)
-###### 1.2.2. NodeJS
+###### [1.2.2. NodeJS](#122-nodejs-1)
 ###### 1.2.3 Instalação AngularJS 
 ##### 1.3. Conhecendo o AngularJS 
 ###### 1.3.1. DataBind 

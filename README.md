@@ -314,7 +314,7 @@ function formatarCPF() {
 }
 ```
 
-**```filtro.controller.js```**
+**```filtros.controller.js```**
 ```javascript
 angular
     .module('app', ['filtrosApp'])
@@ -326,7 +326,7 @@ function filtroController($scope, $filter) {
 }
 ```
 
-**```filtro.tpl.html```**
+**```filtros.tpl.html```**
 ```html
 <html ng-app="app">
 <meta charset="utf-8" />
@@ -351,7 +351,73 @@ function filtroController($scope, $filter) {
 </html>
 ```
 
+###### 1.3.6 Diretivas
 
+Diretivas são extensões da linguagem HTML, que fornecem a possibilidade de estender/ampliar o
+comportamento de elementos HTML. Este recurso permite a implementação de novos
+comportamentos de forma declarativa.
+
+Ao selecionar um elemento HTML, a diretiva pode ampliar seu comportamento de diversas formas:
+
+• para adicionar um novo HTML,
+• associar eventos à funções Javascript,
+• manipular o DOM.
+
+![teste](https://img.portalgsti.com.br/IEdtrqtq5YpUJ_waXhlqdtTXHkc=/708x0/https://www.portalgsti.com.br/media/uploads/jorgedev/diretivas.png)
+
+https://docs.angularjs.org/guide/directive
+
+###### 1.3.6.1. Criando sua própria diretiva
+
+**```diretiva.app.js```**
+```javascript
+angular.module('diretivaApp', [])
+    .directive('primeiraDiretiva', primeriaDiretiva);
+
+function primeriaDiretiva() {
+    return {
+        restrict: 'AECM',
+        template: '<p>Fiz minha primeira diretiva!!</p>'
+    };
+}
+```
+
+**```app.js```**
+```javascript
+angular
+    .module('app', ['diretivaApp']);
+```
+**```diretiva.html```**
+```html
+<html ng-app="app">
+<meta charset="utf-8" />
+
+<head>
+    <title>Diretivas</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
+    <script src="diretivas.js"></script>
+    <script src="diretiva.app.js"></script>
+</head>
+
+<body>
+    <h1>Diretivas</h1>
+
+    <h2> restrict A</h2>
+    <span primeira-diretiva> Replace False </span>
+
+    <h2> restrict E</h2>
+    <primeira-diretiva> Replace False </primeira-diretiva>
+
+    <h2> restrict C</h2>
+    <span class="primeira-diretiva"> Replace False </span>
+
+    <h2> restrict M</h2>
+    <!-- directive: primeira-diretiva -->
+
+</body>
+
+</html>
+```
 
 
 

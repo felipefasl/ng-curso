@@ -3,7 +3,7 @@
 Material ministrado no curso AngularJs em 40hrs Por [Felipe Lima](https://github.com/felipefasl) e [Guilherme Cruz](https://github.com/sambrmg)
 
 ## Índice
-#### 1. AngularJS
+#### [1. AngularJS](#1-angularjs-1)
 ##### [1.1 Introdução](#11-introdução-1)
 ##### [1.2 Preparando o ambiente](#12-preparando-o-ambiente-1)
 ###### [1.2.1. Editor de código](#121-editor-de-codigo-1)

@@ -263,3 +263,95 @@ function formularioController($scope, $window) {
 
 No controlador injetamos além do **$scope**, o serviço do angular **$window** para ter acesso ao objeto window do browser.
 
+###### 1.3.5 Filtros
+
+Os filtros são usados para formatar os dados exibidos para o usuário.
+
+Eles podem ser usados para visualizar modelos, controladores ou serviços. O AngularJS vem com
+uma coleção de filtros embutidos, mas também é fácil definir os seus próprios.
+
+A sintaxe geral nos modelos é a seguinte:
+
+ ```javascript
+ {{ expessao | nome_filtro : parametros }}
+ ```
+ 
+Tipo | Descrição
+--------- | ------
+[filter](https://docs.angularjs.org/api/ng/filter/filter)    | Seleciona um subconjunto de itens e o retorna como uma nova formatação.
+[currency](https://docs.angularjs.org/api/ng/filter/currency)  | Formata um número como uma moeda (ou seja, R$ 1.234,56). Quando nenhum símbolo de moeda é fornecido, o símbolo padrão para a localidade atual é usado.
+[number](https://docs.angularjs.org/api/ng/filter/number)    | Formata um número como texto
+[date](https://docs.angularjs.org/api/ng/filter/date)      | Formata data para uma string baseada no formato informado.
+[json](https://docs.angularjs.org/api/ng/filter/json)  | Permite converter um objeto JavaScript em string JSON.
+[lowercase](https://docs.angularjs.org/api/ng/filter/lowercase)  | Converte uma string para que todas as letras fiquem minúsculas.
+[uppercase](https://docs.angularjs.org/api/ng/filter/uppercase)  | Converte uma string para que todas as letras fiquem maiúsculas.
+[limitTo](https://docs.angularjs.org/api/ng/filter/limitTo)  | Cria uma nova matriz ou sequência contendo apenas um número especificado de elementos.
+[orderBy](https://docs.angularjs.org/api/ng/filter/orderBy)  | Os elementos são obtidos do início ou do fim da matriz de origem, sequência ou número, conforme especificado pelo valor e sinal (positivo ou negativo) do limite. Outros objetos do tipo array também são suportados (por exemplo, subclasses de array, NodeLists, coleções jqLite / jQuery etc.). Se um número for usado como entrada, ele será convertido em uma sequência.
+
+###### 1.3.5.1 Criando seu próprio filtro
+
+Criar nosso próprio filtro é muito fácil, só precisamos registrá-lo utilizando a function filter no
+módulo do AngularJS. A syntax pode ser vista abaixo. O primeiro argumento é o nome do filtro e o
+segundo é a factory function para o filtro.
+
+**```filtros.app.js```**
+```javascript
+angular.module('filtrosApp', [])
+    .filter('cpf', formatarCPF);
+
+function formatarCPF() {
+
+    return function(input) {
+        var str = input + '';
+        if (str.length <= 11) {
+            str = str.replace(/\D/g, '');
+            str = str.replace(/(\d{3})(\d)/, "$1.$2");
+            str = str.replace(/(\d{3})(\d)/, "$1.$2");
+            str = str.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+        }
+        return str;
+    };
+}
+```
+
+**```filtro.controller.js```**
+```javascript
+angular
+    .module('app', ['filtrosApp'])
+    .controller('FiltroController', filtroController);
+
+function filtroController($scope, $filter) {
+
+    $scope.cpfDigitado = $filter('cpf')('02470868513');
+}
+```
+
+**```filtro.tpl.html```**
+```html
+<html ng-app="app">
+<meta charset="utf-8" />
+
+<head>
+    <title>Filtros</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
+    <script src="filtros.js"></script>
+    <script src="filtro.controller.js"></script>
+</head>
+
+
+<body ng-controller="FiltroController">
+
+    <h1>{{1800 | currency}}</h1>
+    <hr/> CPF: <input type="text" ng-model="cpfDigitado" />
+    <h1>CPF digitado: {{cpfDigitado | cpf}}</h1>
+    <hr/> {{'Adicionando meu nome: ' | adicionaMeuNome}}
+    <hr/> {{3 | multiplicaPor4 }}
+</body>
+
+</html>
+```
+
+
+
+
+

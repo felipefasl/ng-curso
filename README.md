@@ -419,5 +419,275 @@ angular
 </html>
 ```
 
+###### 1.3.7. Rotas
 
+O AngularJS possui um recurso chamado Deep Linking, que consiste em criar rotas na URI do
+documento HTML para manipular partes do código HTML de forma independente, podendo assim
+separar ainda mais as camadas da sua aplicação. No caso mais simples, suponha que exista uma
+lista de dados que são exibidos em uma tabela, e que ao clicar em um item desta lista, deseja-se
+exibir um formulário com os dados daquela linha.
 
+O uso de DeepLinking usa Ajax para carregar templates de forma dinâmica, então é necessário
+que todo o exemplo seja testado em um servidor web.
+
+Nós utilizaremos o http-server do node, para isso devemos instalar de forma global
+
+```node
+npm install http-server -g
+```
+
+Se organizarmos esta pequena aplicação em arquivos, teremos:
+
+***app.html*** 
+O arquivo principal da aplicação, que contém o código html, o ng-app, a inclusão do
+AngularJS, entre outras propriedades.
+
+```html
+<html ng-app="app">
+<meta charset="utf-8" />
+
+<head>
+    <title>Rotas</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular-route.min.js"></script>
+    <script src="app.js"></script>
+    <script src="formulario-edicao.controller.js"></script>
+    <script src="formulario-novo.controller.js"></script>
+    <script src="lista.controller.js"></script>
+</head>
+
+<body>
+    <h1>Exemplo Rotas</h1>
+    <div ng-view></div>
+</body>
+
+</html>
+```
+Inicialmente criamos o arquivo app.html, que contém a chamada aos arquivos javascript da
+aplicação. Além dos arquivos javascript, também usamos a propriedade **ng-app**, que já
+aprendemos a usar em qualquer aplicação que use o framework.
+
+Também adicionamos um segundo arquivo javascript, que é responsável pelo gerenciamento da
+rota, chamado de ***´angular-route.min.js´***.
+
+Este módulo é criado através da definição de um nome para o **ng-app**, ficando desta forma:
+ng-app="app". Assim, estamos criando um módulo chamado app que deve estar definido pela
+aplicação. Como podemos ver, o arquivo app.html não tem nenhum conteúdo, apenas o cabeçalho
+e uma div que possui a propriedade **ng-view**. Esta propriedade configura o AngularJS para
+que toda a geração de código seja renderizada dentro desta tag. Esta definição é realizada no
+arquivo rotas.app.js, cuja parte inicial está descrita a seguir.
+
+***app.js***
+Contém o código javascript que define o módulo e o comportamento das rotas.
+
+```javascript
+angular
+    .module('app', ['ngRoute'])
+    .config(['$routeProvider', '$locationProvider', definirRotas])
+    .run(['$rootScope', inicializarVariaveisGlobais]);
+
+function definirRotas($routeProvider, $locationProvider) {
+
+    $locationProvider.hashPrefix('');
+
+    $routeProvider.
+
+    when('/', {
+        controller: 'ListaController',
+        templateUrl: 'lista.tpl.html'
+    }).
+
+    when('/edicao/:fruta', {
+        controller: 'EdicaoController',
+        templateUrl: 'formulario.tpl.html'
+    }).
+
+    when('/novo', {
+        controller: 'NovoController',
+        templateUrl: 'formulario.tpl.html'
+    }).
+
+    otherwise({ redirectTo: '/' });
+
+}
+
+/**
+ * @description Inicializa variáveis globais no rootScope
+ * @param {*} $rootScope Injeção angular
+ */
+function inicializarVariaveisGlobais($rootScope) {
+
+    $rootScope.frutas = ['banana', 'maçã', 'laranja'];
+    console.log('rotasApp.run');
+}
+```
+
+Nesta primeira parte, usamos o método ***angular.module*** para criar um módulo, cujo o nome é app.
+O segundo parâmetro é a referência ao módulo **ngRoute**, que é usado para criar as rotas (lembrese que ele deve ser incuído, conforme visto na linha 7 do arquivo app.html).
+
+Após criar o módulo, usamos o método config para configurar o módulo, neste caso estamos
+configurando uma funcionalidade chamada **Router**(que possui a função de carregar templates e
+controllers de acordo com uma URI, ou seja, um endereço repassado pelo navegador) e **Location**
+(define o prefixo padrão das rotas). Na linha Na linha 12 temos a primeira configuração através do
+método when, que informa ao Router que, ao acessar a raiz do endereço web que o arquivo
+incio.html está, deve ser carregado o controller ***ListaController*** e o template lista.tpl.html.
+
+``Tanto o template quanto o controller serão carregados no elemento html que contém a propriedade ng-view
+do app.html.``
+
+Na linha 17 adicionamos mais uma rota, e agora configuramos que quando a URI for /edicao/:fruta,
+o controller EdicaoController e o template formulário.tpl.html serão carregados. O atributo :fruta
+será uma variável que poderá ser obtida no controller.
+
+Tanto na linha 17 quanto na linha 22 usamos o mesmo template formulário.tpl.html que contém um
+formulário para edição ou inserção de um registro.
+
+Na linha 27, configuramos a rota padrão da URI, que é ativada quando nenhuma rota configurada
+é encontrada.
+
+Voltando para a linha 4 usamos o método run para configurar a variável $scope da aplicação, em
+um contexto global ao módulo. Neste método criamos a variável frutas que possui um contexto
+global à aplicação
+
+Criamos três controllers para a aplicação, ListaController, EdicaoController e NovoController.
+
+O primeiro, ListaController, usado apenas para a injeção do **$scope**.
+
+***lista.controller.js***
+Contém o código javascript para a injeção das variáveis declaradas no scope.
+
+```javascript
+angular
+    .module('app')
+    .controller('ListaController', listaController);
+
+function listaController($scope) {
+
+    $scope.excluir = function(p1) {
+        if (confirm('Confirma a deleção da fruta ' + $scope.frutas[p1])) {
+            $scope.frutas.splice(p1, 1);
+        }
+    }
+}
+```
+
+Vamos agora analisar o arquivo lista.tpl.html que é um template e carregado diretamente pelo
+roteamento do módulo (app.js, linha 14).
+
+***lista.tpl.html***
+Contém a tabela que lista os dados.
+
+```html
+<h2>Frutas ({{frutas.length}})</h2>
+<ul>
+    <li ng-repeat="(index, fruta) in frutas">
+        <a href="#/edicao/{{fruta}}">{{fruta}}</a>
+        <button ng-click="excluir(index)">Excluir</button>
+    </li>
+</ul>
+<a href="#/novo">Novo</a>
+```
+
+Já o controller EdicaoController possui três parâmetros:
+
+• **scope:** É o escopo da aplicação que pode ser utilizada no template do controller criado.
+• **location:** Usada para realizar redirecionamentos entre as rotas
+• **routeParams:** São os parâmetros repassados pela URI
+
+***formulario-edicao.controller.js***
+Contém o código javascript que define a regra negocial da edição.
+
+```javascript
+angular
+    .module('app')
+    .controller('EdicaoController', edicaoController);
+
+function edicaoController($scope, $location, $routeParams) {
+
+    // Variáveis Públicas
+    $scope.titulo = 'Editar Fruta';
+    $scope.fruta = $routeParams.fruta;
+
+    // variáveis privadas
+    var _indiceFruta = $scope.frutas.indexOf($scope.fruta);
+
+    /**
+     * @description Salva os dados editados da fruta
+     */
+    $scope.salvar = function() {
+
+        // Atualiza os dados da fruta editada
+        $scope.frutas[_indiceFruta] = $scope.fruta;
+
+        // Redireciona para a página principal
+        $location.path('/');
+    };
+}
+```
+
+Na linha 8 preenchemos a variável $scope.titulo, para que o título do formulário mude, lembrando
+que o formulário é usado tanto para criar um novo registro quando editá-lo. Na linha 9 pegamos
+como parâmetro a fruta que foi repassada pela URI. Este valor é pego de acordo com o parâmetro
+:fruta criado pela rota(linha 17 do arquivo rotas.app.js). Na linha 12 obtemos o índice do item que
+está para ser editado. Usamos isso para poder editar o item no método salvar criado logo a seguir.
+Na linha 17 temos o método salvar que é usado para atualizar o registro no array global. Em uma
+aplicação real estaríamos utilizando ajax para que o servidor persistisse o dado. Na linha 25
+redirecionamos a aplicação e com isso outro template será carregado.
+
+Criamos também o controller NovoController, que é semelhante ao EdicaoController e possui o
+método salvar onde um novo registro é inserido no array frutas.
+
+***formulario-novo.controller.js***
+Contém o código javascript que define a regra negocial para se cadastrar um novo registro.
+
+```javascript
+angular
+    .module('app')
+    .controller('NovoController', novoController);
+
+function novoController($scope, $location) {
+
+    $scope.titulo = 'Nova Fruta';
+    $scope.fruta = '';
+
+    /**
+     * @description Inclui uma nova fruta no array de frutas
+     */
+    $scope.salvar = function() {
+
+        // Adiciona um novo item(fruta) no array(frutas)
+        $scope.frutas.push($scope.fruta);
+
+        // Redireciona para a página principal
+        $location.path('/');
+    };
+}
+```
+
+O template não necessita informar o seu controller, pois isso já foi feito pelo módulo do AngularJS
+(rotas.app.js, linha 13). Como a variável frutas possui um escopo global, ela pode ser usada pelo
+template e na linha 1, exibindo quantos itens existem no array. Na linha 3 iniciamos a repetição dos
+elementos que pertencem ao array frutas e incluímos na repetição um link para #/edicao/. Esta é a
+forma com que o roteamento do AngularJS funciona, iniciando com # e repassando a URI logo a
+seguir. Na linha 7, criamos outro link, para incluir um novo registro. Novamente usamos a URI que
+será utilizada pelo roteamento do AngularJS.
+
+O último arquivo deste pequeno exemplo é o formulário que irá editar ou inserir um novo registro.
+
+***formulario.tpl.html***
+Contém o formulário de edição e criação de um novo registro.
+
+```html
+<h2> {{titulo}} </h2>
+<form name="meuFormulario">
+    <input type="text" ng-model="fruta" name="fruta" required>
+    <button ng-click="salvar()" ng-disabled="meuFormulario.$invalid">Salvar</button>
+</form>
+<a href="#/">Cancelar</a>
+```
+
+Na linha 1 usamos o ``{{titulo}}`` para inserir um título que é criado pelo controller. O formulário possui
+apenas um campo cujo **ng-model** é fruta que será utilizado pelo controllers de edição e novo. Neste
+formulário também utilizamos **ng-disabled** para que o botão seja ativado somente se houver algum
+texto digitado na caixa de texto. O botão salvar possui a propriedade **ng-click**, que irá chamar o
+método salvar() do controller.

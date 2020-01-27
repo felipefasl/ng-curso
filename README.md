@@ -8,14 +8,14 @@ Material ministrado no curso AngularJs em 40hrs Por [Felipe Lima](https://github
 ##### [1.2 Preparando o ambiente](#12-preparando-o-ambiente-1)
 ###### [1.2.1. Editor de código](#121-editor-de-codigo-1)
 ###### [1.2.2. NodeJS](#122-nodejs-1)
-###### 1.2.3 Instalação AngularJS 
-##### 1.3. Conhecendo o AngularJS 
-###### 1.3.1. DataBind 
-###### 1.3.2. Controladores 
-###### 1.3.3. Loop 
-###### 1.3.4. Formulários 
-###### 1.3.5. Filtros 
-###### 1.3.5.1. Criando seu próprio filtro 
+###### [1.2.3 Instalação AngularJS](#123-instalação-angularjs-1) 
+##### [1.3. Conhecendo o AngularJS](#13-conhecendo-o-angularjs-1) 
+###### [1.3.1. DataBind](#131-databind-1) 
+###### [1.3.2. Controladores](#132-controladores-1) 
+###### [1.3.3. Loop](#133-loop-1) 
+###### [1.3.4. Formulários](#134-formulários-1) 
+###### [1.3.5. Filtros](#135-filtros-1) 
+###### [1.3.5.1. Criando seu próprio filtro](#1351-criando-seu-próprio-filtro-1) 
 ##### 1.3.6. Diretivas 
 ###### 1.3.6.1. Criando sua própria diretiva 
 ##### 1.3.7. Rotas 

@@ -691,3 +691,343 @@ apenas um campo cujo **ng-model** é fruta que será utilizado pelo controllers 
 formulário também utilizamos **ng-disabled** para que o botão seja ativado somente se houver algum
 texto digitado na caixa de texto. O botão salvar possui a propriedade **ng-click**, que irá chamar o
 método salvar() do controller.
+
+##### 1.4. Promessas
+
+Uma promessa é um método de resolver um valor (ou não) de maneira assíncrona. Promessas são
+objetos que representa o valor de retorno ou exceção lançada que uma função pode eventualmente
+fornecer. São incrivelmente úteis para lidar com objetos remotos.
+
+Para criar uma promessa no Angular, podemos usar o serviço **$q** interno. O serviço **$q** fornece
+alguns métodos. Primeiro, precisamos injetar o serviço **$q** no objeto em que queremos usá-lo,
+conforme linha 5 no caso abaixo.
+
+**formulario-novo.controller.js**
+```javascript
+angular
+    .module('app')
+    .controller('NovoController', novoController);
+
+function novoController($scope, $location, $q) {
+
+    $scope.titulo = 'Nova Fruta';
+    $scope.fruta = '';
+
+    /**
+     * @description Inclui uma nova fruta no array de frutas
+     */
+    $scope.salvar = function() {
+
+        $scope.mensagem = 'carregando...';
+        adicionarFrutaNaLista()
+            .then(function(response) { // linha 17
+
+                $scope.mensagem = '';
+                $location.path(response);
+            });
+
+    };
+
+    /**
+     * @description adiciona um item à lista e retorna uma rota
+     * @returns uma rota do tipo string
+     */
+    function adicionarFrutaNaLista() { // linha 25
+        var deferred = $q.defer();
+
+        setTimeout(function() { 
+
+            $scope.frutas.push($scope.fruta);
+            deferred.resolve('/');
+        }, 1000);
+
+        return deferred.promise;
+    }
+}
+```
+
+Perceba que ao criar a função **adicionarFrutaNaLista()** na liha 25, ela me devolve uma promessa
+e não um valor, dessa forma precisamos “esperar” o tratamento da promessa com o comando
+then(linha 17) para assim continuar com o processamento desejado.
+
+##### 1.5. Conectando AngularJS ao o servidor
+
+Agora que conhecemos um pouco sobre o AngularJS, podemos entender como funciona a sua
+comunicação com o servidor. Assim como é feito com jQuery e até com javascript puro, a melhor
+forma de obter e enviar dados para o servidor é através de Ajax e o formato de dados para se usar
+nesta comunicação é JSON. 
+
+Existem diversas formas de conexão entre cliente (neste caso, AngularJS) e servidor, e neste curso
+estaremos utilizando um conceito chamado RESTful, que é uma comunicação HTTP que segue
+um padrão bastante simples, utilizando cabeçalhos HTTP como POST, GET, PUT, DELETE.
+
+Na forma mais simples de comunicação de dados, onde temos um objeto e as ações de criar, editar,
+listar e deletar objetos, resumimos o padrão RESTful às seguintes ações:
+
+Método http://site.com/produtos
+• GET Listar todos os produtos
+• POST Editar uma lista de produtos
+• PUT Criar um novo produto na lista de produtos
+• DELETE Excluir uma lista de produtos
+
+No AngularJS a forma mais simples de trabalhar com estas conexões é através do serviço $http,
+que pode ser injetado em um controller.
+
+##### 1.5.1. Uso do $http
+
+**$http** é uma implementação ajax através do XMLHttpRequest utilizando JSONP. Iremos sempre
+usar JSON para troca de dados entre cliente e servidor.
+
+A forma mais simples de uso do $http está descrito no exemplo a seguir:
+
+`$http({method: 'GET', url: '/algumUrl'});`
+
+O método get pode ser generalizado para:
+
+`$http.get('/algumUrl');`
+
+Assim como existe o get, existem os outros métodos também, conforme a lista a seguir:
+• $http.get
+• $http.head
+• $http.post
+• $http.put
+• $http.delete
+• $http.jsonp 
+
+##### 1.6. Services
+
+Até agora, nos preocupamos apenas com a forma como a visualização está vinculada ao **$scope**
+e como o controlador gerencia os dados. Para fins de memória e desempenho, os controladores
+são instanciado somente quando eles são necessários e descartados quando não são. Isso
+significa que toda vez que trocamos
+uma rota ou recarregar uma view, o controlador atual é limpo pelo Angular.
+
+Os serviços fornecem um método para mantermos os dados por toda a vida útil do aplicativo e nos
+comunicarmos controladores de maneira consistente.
+
+Os serviços são objetos singleton que são instanciados apenas uma vez por aplicativo (pelo injetor
+**$**) e carregados com preguiça (criados apenas quando necessário). Eles fornecem uma interface
+para manter juntos esses métodos relacionados a uma função específica.
+
+**$http**, por exemplo, é um exemplo de serviço AngularJS. Ele fornece acesso de baixo nível ao
+objeto XMLHttpRequest do navegador. Em vez de precisar sujar o aplicativo com chamadas de
+baixo nível para o objeto XMLHttpRequest, podemos simplesmente interagir com a API $http.
+
+Para exemplificar o uso de services criamos o arquivo fruta.service.js para acessar a API Rest com
+todas as funcionalidades de manipulação da base de dados.
+
+Por boas práticas de programação todo serviço é um módulo para possibilitar a chamada de
+qualquer parte da aplicação com a sua injeção.
+
+```javascript
+angular.module('frutaServiceApp', [])
+    .service('FrutaService', frutaService);
+
+function frutaService($http) {
+
+    var ENDERECO_BACKEND = 'https://ng-curso-api.herokuapp.com/frutas';
+
+    return {
+        listar: function() {
+
+            return $http.get(ENDERECO_BACKEND);
+        },
+        incluir: function(nome) {
+
+            return $http.post(ENDERECO_BACKEND, nome);
+        },
+        atualizar: function(fruta) {
+
+            return $http.put(ENDERECO_BACKEND, fruta);
+        },
+        deletar: function(id) {
+
+            var parametros = {
+                data: id,
+                headers: {
+                    'Content-type': 'application/json;charset=utf-8'
+                }
+            }
+
+            return $http.delete(ENDERECO_BACKEND, parametros);
+        }
+    }
+}
+```
+
+No serviço acima - FrutaService - usamos os métodos get para listar, post para incluir, put para
+atualizar e delete para deletar.
+
+Para usar o serviço em um controller, deve-se injetar o módulo dele na declaração do app e depois
+injetá-lo na declaração do controller conforme podemos ver na linha 4 do arquivo rotas.app.js e na
+linha 3 do arquivo formulario-novo.controller.js.
+
+```javascript
+angular
+    .module('app', [
+        'ngRoute',
+        'frutaServiceApp'
+    ])
+    .config(['$routeProvider', '$locationProvider', definirRotas]);
+
+function definirRotas($routeProvider, $locationProvider) {
+
+    $locationProvider.hashPrefix('');
+
+    $routeProvider.
+
+    when('/', {
+        controller: 'ListaController',
+        templateUrl: 'lista.tpl.html'
+    }).
+
+    when('/edicao/:id/:nome', {
+        controller: 'EdicaoController',
+        templateUrl: 'formulario.tpl.html'
+    }).
+
+    when('/novo', {
+        controller: 'NovoController',
+        templateUrl: 'formulario.tpl.html'
+    }).
+
+    otherwise({ redirectTo: '/' });
+
+}
+```
+
+**formulario-novo.controller.js**
+```javascript
+angular
+    .module('app')
+    .controller('NovoController', novoController);
+
+novoController.$inject = ['$scope', '$location', 'FrutaService'];
+
+function novoController($scope, $location, frutaService) {
+    $scope.titulo = 'Nova Fruta';
+    $scope.fruta = {
+        id: undefined,
+        nome: undefined
+    };
+
+    /**
+     * @description Inclui uma nova fruta na base de dados
+     */
+    $scope.salvar = function() {
+
+        frutaService.incluir($scope.fruta.nome)
+            .then(function() {
+                // Redireciona para a página principal
+                $location.path('/');
+            });
+    };
+}
+```
+
+**formulario-edicao.controller.js**
+```javascript
+angular
+    .module('app')
+    .controller('EdicaoController', edicaoController);
+
+edicaoController.$inject = ['$scope', '$location', '$routeParams', 'FrutaService'];
+
+function edicaoController($scope, $location, $routeParams, frutaService) {
+
+    // Variáveis Públicas
+    $scope.titulo = 'Editar Fruta';
+    $scope.fruta = {
+        id: $routeParams.id,
+        nome: $routeParams.nome
+    };
+
+    /**
+     * @description Salva os dados editados da fruta
+     */
+    $scope.salvar = function() {
+
+        // Atualiza os dados da fruta editada
+        frutaService.atualizar($scope.fruta)
+            .then(function() {
+
+                // Redireciona para a página principal
+                $location.path('/');
+            })
+            .catch(function(erro) {
+
+                console.log(erro.data.message);
+            });
+    };
+}
+```
+
+##### 1.7. Gerindo dependências com NPM
+
+O npm é o Gerenciador de Pacotes do Node (Node Package Manager) que vem junto com ele e
+que é muito útil no desenvolvimento node. Por anos, o Node tem sido amplamente usado por
+desenvolvedores JavaScript para compartilhar ferramentas, instalar vários módulos e gerenciar
+suas dependências. Sabendo disso, é realmente importante para pessoas que trabalham
+com Node.js entendam o que é npm.
+
+###### 1.7.1. Como o npm Funciona?
+
+O npm funciona baseado nesses dois ofícios:
+
+• Ele é um repositório amplamente usado para a publicação de projetos Node.js de código
+aberto (open-source). Isso significa que ele é uma plataforma online onde qualquer pessoa
+pode publicar e compartilhar ferramentas escritas em JavaScript.
+
+• O npm é uma ferramenta de linha de comando que ajuda a interagir com plataformas online,
+como navegadores e servidores. Essa utilidade auxilia na instalação e desinstalação de
+pacotes, gerenciamento das versões e gerenciamento de dependências necessárias para
+executar um projeto.
+
+Para usá-lo, você precisa instalar o node.js – visto que, eles são empacotados juntos.
+
+##### 1.7.2. Começar um projeto com npm
+
+Se você já tiver o Node e o npm e deseja começar a construir seu projeto, execute o comando npm
+init. Com isso, você dará procedimento à inicialização do seu projeto.
+
+Esse comando funciona como uma ferramenta para criar o arquivo package.json de um projeto.
+Depois de executar as etapas do npm init, um arquivo package.json será gerado e colocado no
+diretório atual.
+
+##### 1.8. Automatizando com o Grunt
+
+Em diversas ocasiões, nós desenvolvedores, enfrentamos tarefas repetitivas que podem ser
+facilmente automatizadas. É aí que entra o Grunt. Ele é usado para: minificação, geração de builds,
+execução de testes, entre outros.
+
+**Instalação:** `npm install -g grunt-cli`
+
+Em nosso projeto , após a criação do package.json, iremos adicionar as dependências abaixo nele
+para podermos usar o grunt como ferramenta de automação de tarefas repetitivas:
+
+```json
+"devDependencies": {
+        "grunt": "^1.0.4",
+        "grunt-concurrent": "^3.0.0",
+        "grunt-contrib-clean": "^2.0.0",
+        "grunt-contrib-connect": "^2.1.0",
+        "grunt-contrib-copy": "^1.0.0",
+        "grunt-contrib-cssmin": "^3.0.0",
+        "grunt-contrib-jshint": "^2.1.0",
+        "grunt-contrib-uglify": "^4.0.1",
+        "grunt-contrib-watch": "^1.1.0",
+        "grunt-htmllint": "^0.3.0",
+        "grunt-karma": "^3.0.2",
+        "grunt-strip-code": "^1.0.6",
+        "grunt-timer": "^0.6.0",
+        "jasmine-core": "^3.5.0",
+        "jit-grunt": "^0.10.0",
+        "karma": "^4.4.1",
+        "karma-coverage": "^2.0.1",
+        "karma-jasmine": "^2.0.1",
+        "karma-phantomjs-launcher": "^1.0.4",
+        "phantomjs-prebuilt": "^2.1.16"
+    }
+```
+
+`Executar o comando **npm install** para instalar as dependências no seu projeto.`

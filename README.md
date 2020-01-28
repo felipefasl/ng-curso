@@ -6,7 +6,7 @@ Material ministrado no curso AngularJs em 40hrs Por [Felipe Lima](https://github
 #### [1. AngularJS](#1-angularjs-1)
 ##### [1.1 Introdução](#11-introdução-1)
 ##### [1.2 Preparando o ambiente](#12-preparando-o-ambiente-1)
-###### [1.2.1. Editor de código](#121-editor-de-codigo-1)
+###### [1.2.1. Editor de código](#121-editor-de-código-1)
 ###### [1.2.2. NodeJS](#122-nodejs-1)
 ###### [1.2.3 Instalação AngularJS](#123-instalação-angularjs-1) 
 ##### [1.3. Conhecendo o AngularJS](#13-conhecendo-o-angularjs-1) 
@@ -16,17 +16,17 @@ Material ministrado no curso AngularJs em 40hrs Por [Felipe Lima](https://github
 ###### [1.3.4. Formulários](#134-formulários-1) 
 ###### [1.3.5. Filtros](#135-filtros-1) 
 ###### [1.3.5.1. Criando seu próprio filtro](#1351-criando-seu-próprio-filtro-1) 
-##### 1.3.6. Diretivas 
-###### 1.3.6.1. Criando sua própria diretiva 
-##### 1.3.7. Rotas 
-#### 1.4. Promessas 
-#### 1.5. Conectando AngularJS ao o servidor 
-##### 1.5.1. Uso do $http 
-#### 1.6. Services 
-#### 1.7. Gerindo dependências com NPM 
-##### 1.7.1. Como o npm Funciona? 
-##### 1.7.2. Começar um projeto com npm 
-#### 1.8. Automatizando com o Grunt 
+##### [1.3.6. Diretivas](#136-diretivas-1) 
+###### [1.3.6.1. Criando sua própria diretiva](#1361-criando-sua-própria-diretiva-1) 
+##### [1.3.7. Rotas](#137-rotas-1) 
+#### [1.4. Promessas](#14-promessas-1) 
+#### [1.5. Conectando AngularJS ao o servidor](#15-conectando-angularjs-ao-o-servidor-1) 
+##### [1.5.1. Uso do $http](#151-uso-do-http-1) 
+#### [1.6. Services](#16-services-1) 
+#### [1.7. Gerindo dependências com NPM](#17-gerindo-dependências-com-npm-1) 
+##### [1.7.1. Como o npm Funciona?](#171-como-o-npm-funciona-1) 
+##### [1.7.2. Começar um projeto com npm](#172-começar-um-projeto-com-npm-1) 
+#### [1.8. Automatizando com o Grunt](#18-automatizando-com-o-grunt-1) 
 #### 1.9. Testes automatizados com Jasmine/Karma 
 ##### 1.9.1. Jasmine 
 ##### 1.9.2. Karma 
